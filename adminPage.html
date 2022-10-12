@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<div class="topnav">
+    <a href="HomePage.html"><img src="images/wheretonextlogo.png"></a>
+</div>
+
+<h1> Admin </h1>
+
+
+  <div id="findDetails">
+    <h2> Find Section Two </h2>
+    <input style="font-size:large"id="findID" type="text"> <br><br>
+    <button id="find">Find</button>
+    <h3> </h3>
+
+    <h3 id="findsectionTwo" type="text"> </h3> 
+
+    
+    <br><br><br><br><br>
+</div>
+
+  <div id="enterDetails">
+    <h2>Update Section Two</h2>
+
+    <h4>ID</h4> 
+        <input style="font-size:large"; id="enterID" type="text"> 
+    <h4>Section Two:</h4> 
+    <input style="font-size:large"; id="enteridsectionTwo" type="text" > 
+
+    
+
+    <button id="update">UPDATE</button> <br><br>
+</div>
+
+
+
+
+
+
+<!-- footer
+<div class="footer">
+    <div class="contain">
+    </div>
+</div> -->
+
+
+<script type="module">
+
+    //CONNECTING TO DATABASE 
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+          import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+  
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAc3w6Hw8yv8cuj8rKJyyidOHUJEmSiMoI",
+            authDomain: "databaseinternal-cef2b.firebaseapp.com",
+            databaseURL: "https://databaseinternal-cef2b-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "databaseinternal-cef2b",
+            storageBucket: "databaseinternal-cef2b.appspot.com",
+            messagingSenderId: "98197164597",
+            appId: "1:98197164597:web:f6a8f524d536420301177c",
+            measurementId: "G-3CL5KRBLFL"
+      };
+  
+      // Initialize Firebase
+          const app = initializeApp(firebaseConfig);
+          const analytics = getAnalytics(app);
+      
+      //Copy and paste the CDN bit of code from your app that you created on Firebase.
+      //The script tag above is already there, so careful not to have duplicate script tags.
+      //After you've copied and pasted, just delete the unnecessary script tags. 
+  
+  
+      import {getDatabase, ref, get, set, child, update, remove}
+      from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+      //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
+      // (the one where you imported "initializeApp" from),
+      //but change "firebase-app" to "firebase-database"
+
+  const db = getDatabase();
+
+  var enteridsectionTwo = document.querySelector("#enteridsectionTwo")
+  var findsectionTwo = document.querySelector("#findsectionTwo")
+
+        
+  var findBtn = document.querySelector("#find");
+  var updateBtn = document.querySelector("#update");
+      
+  function FindData() {
+      const dbref = ref(db);
+
+      get(child(dbref, "Universities/" + findID.value))
+      .then((snapshot)=>{
+          if(snapshot.exists()){
+              findsectionTwo.innerHTML = "" + snapshot.val().sectionTwo;
+          } else {
+              alert("No data found");
+          }
+      })
+      .catch((error)=>{
+          alert(error)
+      })
+      
+  }
+
+  function UpdateData(){
+    update(ref(db, "Universities/"+ enterID.value),{
+        sectionTwo: enteridsectionTwo.value,
+
+    })
+    .then(()=>{
+        alert("Data updated successfully");
+    })
+    .catch((error)=>{
+        alert(error);
+    });
+  }
+
+
+  findBtn.addEventListener('click', FindData);
+  updateBtn.addEventListener('click', UpdateData);
+
+    
+</script>
+
+<style>
+
+/* Page Styles */ 
+* {box-sizing: border-box;}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Top Navigation Bar */ 
+.topnav {
+  overflow: hidden;
+  background-color: #729ce9;
+}
+.topnav a {
+  float: left;
+  display: block;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.topnav a:hover {
+  background-color: #fb8500;
+  color: rgb(255, 255, 255);
+}
+.topnav a.active {
+  background-color: #2196F3;
+  color: white;
+
+} 
+
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: #fb8500;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+
+} 
+
+h1 {text-align: center;}
+
+
+    /* STYLES SPECIFIC TO FOOTER  */
+    .footer {
+      width: 100%;
+      position: relative;
+      height: 100px;
+      background-color: #729ce9;
+      padding-top:10px;
+    }
+    
+    .footer .col {
+      width: 600px;
+      height: auto;
+      float: left;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      padding: 0px 20px 20px 20px;
+    }
+    
+    .footer .col h1 {
+      margin: 0;
+      padding: 0;
+      font-family: inherit;
+      font-size: 12px;
+      line-height: 17px;
+      padding: 20px 0px 5px 0px;
+      color: rgba(255,255,255,0.2);
+      font-weight: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.250em;
+    }
+    
+    .footer .col ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+        
+    .footer .col a,
+    .footer .col p,
+    .footer .col span{
+      color: white;
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: bold;
+      padding: 5px 0px 5px 0px;
+      cursor: pointer;
+      transition: .2s;
+      -webkit-transition: .2s;
+      -moz-transition: .2s;
+      text-decoration: none;
+    }
+    
+    .clearfix {
+      clear: both;
+    }
+
+/* Other styles */
+    body {text-align: center;}
+    #enterDetails {float: left; width: 50%;  background-color: #c1d2f1; color: rgb(0, 0, 0);}
+    #findDetails {float: left; width: 50%; background-color: floralwhite; color: rgb(0, 0, 0);}
+
+   
+    input {width: 120px;}
+  
+
+
+
+</style>
+
+    
+</body>
+</html>
